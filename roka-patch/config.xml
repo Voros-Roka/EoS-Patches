@@ -1,0 +1,39 @@
+<PMD2>
+  <!--=======================================================================-->
+  <!--ASM Patches Constants-->
+  <!--=======================================================================-->
+  <!--Put the data defining your patch here.-->
+  <ASMPatchesConstants>
+
+    <!--*******************-->
+    <!--Patches list-->
+    <!--*******************-->
+    <!--Patching steps for applying various asm patches on the game-->
+    <Patches>
+      <!-- This example only contains the NA and EU patch -->
+      <!--<Game id="EoS_NA" id2="EoS_EU"> -->
+      <Game id="EoS_NA">
+
+        <!--Patching sequence for the actor list loader-->
+        <SimplePatch id="NuzlockeMode" >
+          <!--Open each binaries for processing and include the appropriate files-->
+          <!--The openfile statements will be appropriately generated based on the data in this file, and on the rom path!-->
+
+          <Include filename ="patch.asm"/>
+          <!--You can also patch other binaries too! -->
+          <!--<OpenBin filepath="arm9.bin">
+            <Include filename ="patch.asm"/>
+          </OpenBin>-->
+
+
+          <Parameters>
+            <Param name="_param_roka_pokemon_id" label="Roka Pokemon Id" min="1" max="2048" default="599" type="int"/>
+          </Parameters>
+        </SimplePatch>
+
+      </Game>
+    </Patches>
+
+  </ASMPatchesConstants>
+</PMD2>
+

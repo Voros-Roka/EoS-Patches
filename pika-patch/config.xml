@@ -1,0 +1,26 @@
+<PMD2>
+  <!--=======================================================================-->
+  <!--ASM Patches Constants-->
+  <!--=======================================================================-->
+  <!--Put the data defining your patch here.-->
+  <ASMPatchesConstants>
+
+    <!--*******************-->
+    <!--Patches list-->
+    <!--*******************-->
+    <!--Patching steps for applying various asm patches on the game-->
+    <Patches>
+      <!-- This example only contains the NA and EU patch -->
+      <Game id="EoS_NA" id2="EoS_EU">
+
+        <!--Patching sequence for the actor list loader-->
+        <Patch id="PikaPatch" >
+
+        </Patch>
+
+      </Game>
+    </Patches>
+
+  </ASMPatchesConstants>
+</PMD2>
+
