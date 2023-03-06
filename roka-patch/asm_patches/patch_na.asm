@@ -7,8 +7,15 @@ OV29_BIN_START equ 0x022DC240
 
 .definelabel OV29_AREA_TIP_FUNC_START, 0x0234cb88
 .definelabel OV29_AREA_TIP_FUNC_END, 0x0234cf60
+
 .definelabel OV29_AREA_TIP_DATA_START, 0x02353238
 .definelabel OV29_AREA_TIP_DATA_END, 0x023532d0
+
+.definelabel OV29_AREA_TIP_DATA2_START, 0x023532d8
+.definelabel OV29_AREA_TIP_DATA2_END, 0x02353318
+
+.definelabel OV29_AREA_DISPLAY_UI_INSERT_START, 0x02335bc0
+.definelabel OV29_AREA_DISPLAY_UI_INSERT_END, 0x02335c18
 
 .definelabel OV29_HOOK_TIP_ENTER_DUNGEON, 0x022df90c
 .definelabel OV29_HOOK_TIP_ITEM_0, 0x023451e4
@@ -20,7 +27,19 @@ OV29_BIN_START equ 0x022DC240
 .definelabel OV29_HOOK_CHECK_ONE_PER_DUNGEON, 0x022df1f8
 .definelabel OV29_HOOK_MARK_AS_DEAD, 0x022f84cc
 .definelabel OV29_HOOK_SKIP_REVIVE, 0x02309de8
-.definelabel OV29_HOOK_SHOW_RECRUITE_STATE, 0x02335b90
+.definelabel OV29_HOOK_CUSTOM_UI, 0x02335b64
+
+.definelabel OV29_HOOK_UI_HP_DISPLAY_X_POSITION0, 0x02335c94
+.definelabel OV29_HOOK_UI_HP_DISPLAY_X_POSITION1, 0x02335cb4
+
+.definelabel OV29_HOOK_UI_HP_BAR_X_POSITION0, 0x02335d48
+.definelabel OV29_HOOK_UI_HP_BAR_X_POSITION1, 0x02335da0
+.definelabel OV29_HOOK_UI_HP_BAR_X_POSITION2, 0x02335dc0
+.definelabel OV29_HOOK_UI_HP_BAR_X_POSITION3, 0x02335e38
+.definelabel OV29_HOOK_UI_HP_BAR_X_POSITION4, 0x02335e40
+
+.definelabel OV29_HOOK_UI_HP_BAR_X_SIZE0, 0x02335d88
+.definelabel OV29_HOOK_UI_HP_BAR_X_SIZE1, 0x02335db4
 
 .definelabel OV29_LABEL_SKIP_REVIVE_END, 0x0230a5e0
 
@@ -30,12 +49,19 @@ OV29_BIN_START equ 0x022DC240
 ; bool YesNoMenu(display_portrait_data *portrait,int message_id,int default_option,undefined param_4)
 ; seems to never return 0 ... only 0x01 for yes and 0x02 for no ... not true and false like in docu
 .definelabel OV29_FUNC_SHOW_YES_NO_MENU, 0x0234d518
-; void DisplayMessage(display_portrait_data *portrait,monster_id message_id, bool wait_for_input)
+; void DisplayMessage2(display_portrait_data *portrait,monster_id message_id, bool wait_for_input)
 .definelabel OV29_FUNC_DISPLAY_MESSAGE2, 0x0234d2ac
 ; void set_portrait_data(display_portrait_data *portrait, monster_id monster_id, int expression)
 .definelabel OV29_FUNC_SET_PORTRAIT_DATA, 0x0234bac0
 ; int DisplayNumberTextureUi(int16_t x,int16_t y,int n,int ally_mode)
 .definelabel OV29_FUNC_DISPLAY_NUMBER_TEXTURE_UI, 0x02335880
+; int DisplayCharTextureUi(undefined *call_back_str,int16_t x,int16_t y,int char_id,int16_t param_5)
+.definelabel OV29_FUNC_DISPLAY_CHAR_TEXTURE_UI, 0x02335988
+; void LogMessageByIdWithPopup(entity *user,int message_id)
+.definelabel OV29_FUNC_LOG_MESSAGE_BY_ID_WITH_POPUP, 0x0234b498
+
+; Unknown UI-Function ...
+.definelabel OV29_FUNC_UNKNOWN_UI_FUNCTION, 0x02335808
 
 .definelabel OV29_TEXT_GROUP_TIP_START, 0x3FCE ; 16334
 .definelabel OV29_TEXT_GROUP_TIP_END, 0x3FE8 ; 16360
@@ -51,6 +77,18 @@ OV29_BIN_START equ 0x022DC240
 
 .definelabel ARM9_AREA_EXCLUSIVE_POKEMON_FUNC_START, 0x0204d14c
 .definelabel ARM9_AREA_EXCLUSIVE_POKEMON_FUNC_END, 0x0204d208
+
+.definelabel ARM9_AREA_FATAL_ERROR_FUNC_START, 0x0200c25c
+.definelabel ARM9_AREA_FATAL_ERROR_FUNC_END, 0x0200c2dc
+
+.definelabel ARM9_AREA_DEBUG_PRINT_TRACE_FUNC_START, 0x0200c16c
+.definelabel ARM9_AREA_DEBUG_PRINT_TRACE_FUNC_END, 0x0200c1c8
+
+.definelabel ARM9_AREA_DEBUG_PRINT0_FUNC_START, 0x0200c1c8
+.definelabel ARM9_AREA_DEBUG_PRINT0_FUNC_END, 0x0200c1fc
+
+.definelabel ARM9_AREA_DEBUG_PRINT1_FUNC_START, 0x0200c1fc
+.definelabel ARM9_AREA_DEBUG_PRINT1_FUNC_END, 0x0200c230
 
 .definelabel ARM9_PTR_GLOBAL_PROGRESS, 0x020aff74
 .definelabel ARM9_PTR_ADVENTURE_LOG, 0x020aff78
@@ -86,7 +124,14 @@ OV29_BIN_START equ 0x022DC240
 
 ; returns if the dungeon goes up or down
 ; bool DungeonGoesUp(dungeon_id dungeon_id)
-.definelabel ARM9_FUNC_DUNGEON_GOES_UP, 0x02051288
+;.definelabel ARM9_FUNC_DUNGEON_GOES_UP, 0x02051288
+
+; bool IsRecruitingAllowed(dungeon_id dungeon_id)
+.definelabel ARM9_FUNC_IS_RECRUITING_ALLOWED, 0x02051398
+
+.definelabel ARM9_FUNC_WAIT_FOREVER, 0x02002438
+
+.definelabel ARM9_FUNC_CEIL_FIXED_POINT, 0x02051064
 
 .definelabel ARM9_PTR_TEAM_MEMBERS, 0x020b0a48
 .definelabel ARM9_CONST_TEAM_MEMBER_SIZE, 0x44
@@ -117,5 +162,8 @@ CONFIG_TEXT_ID_QUESTION_DUPE_DEAD equ 0x3FDE ; 16350
 CONFIG_TEXT_ID_QUESTION_DUPE_GENDER equ 0x3FDF ; 16351
 CONFIG_TEXT_ID_QUESTION_MARK_DEAD equ 0x3FE0 ; 16352
 CONFIG_TEXT_ID_QUESTION_NO_REVIVE equ 0x3FE1 ; 16353
+
+LOG_TEXT_ID_NUZLOCKE_RULE_DENIED_REVIVE equ 0x3FE7 ; 16359
+LOG_TEXT_ID_NUZLOCKE_RULE_DENIED_RECRUITE equ 0x3FE8 ; 16360
 
 ; MAX 16360

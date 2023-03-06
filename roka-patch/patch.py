@@ -83,6 +83,13 @@ LANG_STRING_ASOC = {
     "Should the different gender count as\nseperate Pokémon when it comes to\nthe duplication rule?",
     "Should Pokémon be marked as 'dead' when\nthey faint?",
     "Do you want that reviver seeds no longer\nwork inside dungeons?",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "Nuzlocke rules prevented revive!",
+    "Nuzlocke rules prevented recruite!",
     ],
 "MESSAGE/text_f.str": [],
 "MESSAGE/text_g.str": [],
@@ -115,7 +122,7 @@ class PatchHandler(AbstractPatchHandler):
         #    if config.game_region == GAME_REGION_EU:
         #        return ( read_u32(rom.arm9, PATCH_APPLIED_ADDR_EU) == PATCH_APPLIED_VALUE_EU)
         #raise NotImplementedError()
-        return False
+	return False
 
     def apply(self, apply: Callable[[], None], rom: NintendoDSRom, config: Pmd2Data):
 
@@ -138,6 +145,8 @@ class PatchHandler(AbstractPatchHandler):
             print(f'Working with expanded pokemon list!')
             expanded_pokelist = True
 
+        # print(f'Simple belly: {param["_param_simple_belly"]}')
+
         print(f'Patching strings:')
 
         # Go over every text file in the rom
@@ -149,16 +158,6 @@ class PatchHandler(AbstractPatchHandler):
                 strings = StrHandler.deserialize(bin_before)
 
                 if filename in LANG_STRING_ASOC:
-                    # Look at what file to load to get our new names from
-                    string_list = LANG_STRING_ASOC[filename]
-                    if(len(string_list) == 0):
-                        string_list = LANG_STRING_ASOC["MESSAGE/text_e.str"]
-
-                    if(len(string_list)):
-                        for x in range(0,len(string_list)):
-                            print(f'    Patching string[{text_block_start + x}]!')
-                            strings.strings[text_block_start + x - 1] = string_list[x]
-
                     print(f'    Patching name of pokemon {param["_param_roka_pokemon_id"]}')
                     if expanded_pokelist:
                         if param["_param_roka_pokemon_id"] < EXTENDED_PKMN_COUNT:
@@ -173,6 +172,18 @@ class PatchHandler(AbstractPatchHandler):
                             strings.strings[param["_param_roka_pokemon_id"]+block.begin] = "Roka"
                         else:
                             raise UserValueError(f'Parameter roka_pokemon_id can not be greater then {block_len-1}')
+
+                    # Look at what file to load to get our new names from
+                    string_list = LANG_STRING_ASOC[filename]
+                    if(len(string_list) == 0):
+                        string_list = LANG_STRING_ASOC["MESSAGE/text_e.str"]
+
+                    if(len(string_list)):
+                        for x in range(0,len(string_list)):
+                            print(f'    Patching string[{text_block_start + x}]!')
+                            strings.strings[text_block_start + x - 1] = string_list[x]
+
+
 
                 # Save our new text data
                 bin_after = StrHandler.serialize(strings)

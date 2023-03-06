@@ -8,6 +8,27 @@
 
 .definelabel CONFIG_QUESTION_COUNT, 0x12
 
+.definelabel MAX_TEAM_MEMBERS, 0x22B
+
+.definelabel SIMPLE_BELLY, _param_simple_belly
+
+.if SIMPLE_BELLY == 0x00
+	.definelabel BELLY_X_POS, 0xCB
+	.definelabel HP_BAR_X_SIZE, 0x36 ; orgininal was 0x70 (112)
+.else
+	.definelabel BELLY_X_POS, 0xE8
+	.definelabel HP_BAR_X_SIZE, 0x53 ; orgininal was 0x70 (112)
+.endif
+
+.definelabel BELLY_Y_POS, 0x00
+
+
+.definelabel HP_DISPLAY_X_POS, 0x48 ; orgininal is 0x48 (72)
+.definelabel HP_BAR_X_START, 0x90 ; orgininal is 0x90 (144)
+
+.definelabel DUNGEON_STATE_X_POS, 0xF8
+.definelabel DUNGEON_STATE_Y_POS, 0xB7
+
 .definelabel CONFIG_CHECK_USED_SAVEGAME_BIT, 0x00
 .definelabel CONFIG_WANTS_NUZLOCKE, 0x01
 .definelabel CONFIG_NO_REVIVE, 0x05

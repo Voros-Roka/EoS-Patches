@@ -28,6 +28,11 @@
 
           <Parameters>
             <Param name="_param_roka_pokemon_id" label="Roka Pokemon Id" min="1" max="2048" default="599" type="int"/>
+            <Param name="_param_simple_belly" label="Belly display style. '1' displays just the current belly value. '0' displays the value as '[x]/[max]" min="0" max="1" default="1" type="int"/>
+            <!--<Param name="_param_simple_belly" label="Belly display style. Simple just displays the current belly value. Full displays the value in '[x]/[max]' style" type="select">
+              <Option label="Simple" type="int">1</Option>
+              <Option label="Full" type="int">0</Option>
+            </Param>-->
           </Parameters>
         </SimplePatch>
 
